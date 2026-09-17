@@ -1,0 +1,410 @@
+/* =============================================================================
+   EASY BACKGROUND CONFIGURATION:
+   -----------------------------------------------------------------------------
+   To add or change the background image:
+   Simply replace the URL or path in '--bg-image' below!
+   
+   Examples:
+     --bg-image: url('assets/bg-horror.jpg');
+     --bg-image: url('assets/my-creepy-room.png');
+     --bg-image: url('https://images.unsplash.com/...');
+     --bg-image: none;  (Uses atmospheric dark surveillance gradient)
+
+   You can also adjust the darkness and blur right here:
+   ============================================================================= */
+:root {
+  /* SET YOUR BACKGROUND IMAGE HERE: */
+  --bg-image: url('assets/bg-horror.jpg');
+  --bg-opacity: 0.55;       /* Image visibility (0.0 to 1.0) */
+  --bg-darkness: 0.70;      /* Darkness overlay strength */
+  --bg-blur: 0px;           /* Optional blur (e.g. 1px) */
+
+  /* 2008 GRITTY HORROR PALETTE */
+  --color-black: #040405;
+  --color-dark-gray: #121214;
+  --color-border: #444448;
+  --color-text-white: #e5e5e0;
+  --color-text-dim: #77777c;
+  --color-blood-red: #bb1b1b;
+  --color-night-vision: #7cd986;
+
+  /* FONTS */
+  --font-typewriter: 'Special Elite', 'Courier Prime', 'Courier New', monospace;
+  --font-mono: 'Courier Prime', 'Courier New', monospace;
+  --font-hud: 'VT323', 'Courier New', monospace;
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-black);
+  color: var(--color-text-white);
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =============================================================================
+   BACKGROUND LAYER (EASY CUSTOMIZATION + PROCEDURAL FALLBACK)
+   ============================================================================= */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  background-color: #08080c;
+  background-image: var(--bg-image), radial-gradient(circle at 50% 35%, #1c1d22 0%, #0d0e12 50%, #030305 95%);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: var(--bg-opacity);
+  filter: contrast(130%) grayscale(60%) blur(var(--bg-blur));
+  z-index: 0;
+  pointer-events: none !important;
+}
+
+/* Darkness & Vignette Overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(4, 4, 5, 0.45) 0%, rgba(4, 4, 5, var(--bg-darkness)) 65%, rgba(0, 0, 0, 0.98) 100%);
+  z-index: 1;
+  pointer-events: none !important;
+}
+
+/* =============================================================================
+   ANIMATED ANALOG NOISE & STATIC CANVAS
+   ============================================================================= */
+.noise-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.16;
+  mix-blend-mode: screen;
+  z-index: 2;
+  pointer-events: none !important;
+}
+
+/* Scanline Overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.45) 3px,
+    rgba(0, 0, 0, 0.45) 4px
+  );
+  opacity: 0.65;
+  z-index: 3;
+  pointer-events: none !important;
+}
+
+/* =============================================================================
+   2008 CAMCORDER / VHS HUD (MINIMALIST)
+   ============================================================================= */
+.hud-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 100 !important;
+  pointer-events: auto !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.8rem;
+  font-family: var(--font-hud);
+  font-size: 1.25rem;
+  letter-spacing: 0.12em;
+  color: var(--color-text-white);
+  text-shadow: 1px 1px 2px #000;
+}
+
+.rec-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.rec-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff1111;
+  box-shadow: 0 0 6px #ff1111;
+  animation: recFlash 1.6s steps(2, start) infinite;
+}
+
+@keyframes recFlash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.hud-btn {
+  background: transparent;
+  border: 1px solid #555;
+  color: #aaa;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+  pointer-events: auto !important;
+}
+
+.hud-btn:hover {
+  color: #fff;
+  border-color: #999;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* =============================================================================
+   MAIN GRITTY HORROR FOCUS (SIMPLE & UNSETTLING - DEAD CENTER)
+   ============================================================================= */
+.horror-container {
+  position: relative;
+  z-index: 100 !important;
+  pointer-events: auto !important;
+  width: 90%;
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Unsettling Eye Glyph */
+.eye-symbol {
+  margin-bottom: 1.2rem;
+  display: inline-block;
+  opacity: 0.85;
+  transition: transform 0.1s ease-out;
+}
+
+.eye-svg {
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3));
+}
+
+.eye-shape {
+  fill: #08080a;
+  stroke: #bbb;
+  stroke-width: 2.2;
+}
+
+.iris-circle {
+  fill: #18181e;
+  stroke: #777;
+  stroke-width: 1.2;
+}
+
+.pupil-circle {
+  fill: #000;
+  stroke: #222;
+  stroke-width: 1;
+}
+
+.glint-circle {
+  fill: #fff;
+  opacity: 0.7;
+}
+
+/* Mandatory Title: "All seeing eye" */
+.horror-title {
+  font-family: var(--font-typewriter);
+  font-size: 2.3rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--color-text-white);
+  text-transform: lowercase;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.9), -1px -1px 0 rgba(0,0,0,0.8);
+  margin-bottom: 1.8rem;
+  position: relative;
+  user-select: none;
+}
+
+/* Simple Password Form */
+.simple-password-form {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto 1.5rem auto;
+  position: relative;
+  z-index: 101 !important;
+  pointer-events: auto !important;
+}
+
+.input-box-row {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.88);
+  border: 1px solid var(--color-border);
+  padding: 0.4rem 0.6rem;
+  transition: border-color 0.25s;
+  position: relative;
+  z-index: 102 !important;
+  pointer-events: auto !important;
+}
+
+.input-box-row:focus-within {
+  border-color: #888890;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+}
+
+.prompt-arrow {
+  color: #888;
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  margin-right: 0.6rem;
+  user-select: none;
+}
+
+.simple-password-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0;
+  min-width: 0;
+  position: relative;
+  z-index: 103 !important;
+  pointer-events: auto !important;
+  cursor: text !important;
+}
+
+.simple-password-input::placeholder {
+  color: #48484f;
+  font-style: italic;
+  font-size: 0.88rem;
+}
+
+.simple-submit-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  cursor: pointer !important;
+  padding: 0.3rem 0.5rem;
+  transition: color 0.2s;
+  position: relative;
+  z-index: 103 !important;
+  pointer-events: auto !important;
+}
+
+.simple-submit-btn:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Simple Raw Output Log */
+.output-log {
+  width: 100%;
+  max-width: 380px;
+  min-height: 48px;
+  margin: 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  text-align: center;
+  line-height: 1.5;
+  color: var(--color-text-dim);
+}
+
+.log-line {
+  margin-bottom: 0.35rem;
+  word-break: break-word;
+}
+
+.log-line.error {
+  color: var(--color-blood-red);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.log-line.success {
+  color: var(--color-night-vision);
+  font-weight: 700;
+}
+
+.log-line.clue {
+  color: #b0c4de;
+  padding: 0.3rem 0.6rem;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid #555;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+/* Jitter / VHS Tracking Glitch on Error */
+.glitch-active {
+  animation: vhsGlitch 0.35s ease-in-out;
+}
+
+@keyframes vhsGlitch {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3px, 2px); filter: contrast(160%); }
+  40% { transform: translate(4px, -2px); }
+  60% { transform: translate(-2px, -1px); }
+  80% { transform: translate(2px, 1px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* =============================================================================
+   VHS BOTTOM HUD (FIXED TO SCREEN BOTTOM)
+   ============================================================================= */
+.hud-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 100 !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.8rem;
+  font-family: var(--font-hud);
+  font-size: 1.25rem;
+  letter-spacing: 0.12em;
+  color: var(--color-text-dim);
+  text-shadow: 1px 1px 2px #000;
+  user-select: none;
+}
+
+/* =============================================================================
+   RESPONSIVE
+   ============================================================================= */
+@media (max-width: 600px) {
+  .hud-top, .hud-bottom {
+    padding: 0.8rem 1rem;
+    font-size: 1.05rem;
+  }
+  .horror-title {
+    font-size: 1.85rem;
+  }
+  .simple-password-form {
+    max-width: 100%;
+  }
+}
