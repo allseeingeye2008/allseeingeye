@@ -15,7 +15,7 @@ const ARG_CONFIG = {
   passwords: {
     "splitpersonality": {
       title: "ACCESS GRANTED",
-      message: "The fracture is recognized. Two minds, one vessel.",
+      message: "https://youtu.be/5ilOgo0vTD4",
       clue: "Archive unlocked: 'What Occult Freak is going through.' The other side has awakened.",
       redirectUrl: null
     }
